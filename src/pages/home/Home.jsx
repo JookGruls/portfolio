@@ -4,6 +4,7 @@ import { Box, Button, Container, Typography } from '@mui/material';
 
 import Page from '../../layout/Page';
 import About from './components/About';
+import { useOutlet, useOutletContext } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -21,12 +22,16 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
-const Home = () => {
+const Home = ({ props }) => {
+   console.log('🚀 ~ file: Home.jsx:25 ~ Home ~ props:', props);
    const classes = useStyles();
-   const ref = useRef(null);
+   const aboutRef = useRef(null);
+   const [ref] = useOutletContext();
+   console.log('🚀 ~ file: Home.jsx:30 ~ Home ~ ref:', ref);
 
    const handleToAbout = () => {
-      ref.current?.scrollIntoView({ behavior: 'smooth' });
+      aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
+      console.log('🚀 ~ file: Home.jsx:34 ~ handleToAbout ~ aboutRef:', aboutRef);
    };
 
    return (
@@ -34,7 +39,7 @@ const Home = () => {
          <Container maxWidth="lg">
             <Welcome handleClick={handleToAbout} />
             <Box height="100vh" />
-            <About ref={ref} />
+            <About ref={aboutRef} />
             <Box height="100vh" />
          </Container>
       </Page>

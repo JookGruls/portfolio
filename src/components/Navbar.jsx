@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import clsx from 'clsx';
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import Logo from './Logo';
 import pdf from '../../public/doc/sattra_cv.pdf';
-import { scrollToTop } from './ScrollToTop';
+import { scrollTo } from './ScrollToTop';
+import { Link } from 'react-scroll';
 
 const useStyles = makeStyles((theme) => ({
    root: {},
@@ -26,19 +27,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const menus = [
-   { path: 'about', label: 'About' },
-   { path: '/experience', label: 'Experience' },
-   { path: '/contact', label: 'Contact' },
-   { path: '/resume', label: 'Resume' }
+   { position: 'about', label: 'About' },
+   { position: '', label: 'Experience' },
+   { position: '', label: 'Contact' },
+   { position: '', label: 'Resume' }
 ];
 
-const Navbar = ({ className, ...rest }) => {
+const Navbar = forwardRef(({ className, ...rest },ref) => {
+   console.log("🚀 ~ file: Navbar.jsx:37 ~ Navbar ~ ref:", ref)
    const classes = useStyles();
 
    return (
       <AppBar color="secondary" className={clsx(classes.root, className)} elevation={0} {...rest}>
          <Toolbar className={classes.toolbar}>
-            <Box component={Button} onClick={() => scrollToTop()}>
+            <Box component={Button} onClick={() => scrollTo()}>
                <Logo />
             </Box>
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
@@ -51,11 +53,13 @@ const Navbar = ({ className, ...rest }) => {
                            </Button>
                         </a>
                      ) : (
-                        <Button onClick={() => scrollToTop('about')}>
-                           <Typography className={classes.btn} variant="body2">
-                              {item.label}
-                           </Typography>
-                        </Button>
+                        <Link to={item.position} spy={true} smooth={true} offset={50} duration={500}>
+                           <Button>
+                              <Typography className={classes.btn} variant="body2">
+                                 {item.label}
+                              </Typography>
+                           </Button>
+                        </Link>
                      )}
                   </React.Fragment>
                ))}
@@ -63,6 +67,6 @@ const Navbar = ({ className, ...rest }) => {
          </Toolbar>
       </AppBar>
    );
-};
+});
 
 export default Navbar;

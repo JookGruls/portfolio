@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -33,14 +33,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PublicLayout = ({ children }) => {
+   console.log('🚀 ~ file: PublicLayout.jsx:36 ~ PublicLayout ~ children:', children);
    const classes = useStyles();
+   const ref = useRef(null);
    return (
       <div className={classes.root} id="root">
-         <Navbar />
+         <Navbar ref={ref} />
          <div className={classes.wrapper}>
             <div className={classes.contentContainer} id="container">
                <div className={classes.content} id="scrolling-container">
-                  <Outlet />
+                  <Outlet context={[ref]} />
                </div>
             </div>
          </div>

@@ -58,7 +58,13 @@ const About = forwardRef(({ ...props }, ref) => {
                      CSS!
                   </Typography>
                </Box>
-               <img src="../../../../public/assets/images/IMG_9064.jpg" loading="lazy" className={classes.img} />
+               <img
+                  src="./assets/images/IMG_9064.jpg"
+                  loading="lazy"
+                  className={classes.img}
+                  onMouseOver={(e) => (e.currentTarget.src = './assets/images/profile.jpeg')}
+                  onMouseLeave={(e) => (e.currentTarget.src = './assets/images/IMG_9064.jpg')}
+               />
             </Box>
             <Box mb={1} display="flex" alignItems="center">
                <Typography className={classes.h4}>
