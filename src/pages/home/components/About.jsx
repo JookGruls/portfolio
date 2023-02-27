@@ -2,6 +2,8 @@ import React, { forwardRef } from 'react';
 import { Box, Container, Divider, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import ArrowIcon from '@mui/icons-material/ArrowRight';
+import { useOutletContext } from 'react-router-dom';
+import { usePositionScroll } from '../../../components/UsePositionScroll';
 
 const useStyles = makeStyles((theme) => ({
    divider: {
@@ -37,11 +39,12 @@ const useStyles = makeStyles((theme) => ({
 
 const skills = ['Javascript', 'ReactJS', 'React Native', 'HTML', 'CSS', 'PHP', 'Laravel', 'Node.js'];
 
-const About = forwardRef(({ ...props }, ref) => {
+const About = () => {
    const classes = useStyles();
+   const { aboutRef } = usePositionScroll();
 
    return (
-      <Container ref={ref} maxWidth="md" id="about">
+      <Container ref={aboutRef} maxWidth="md" id="about">
          <Box width="100%">
             <Box my={4} display="flex" alignItems="center">
                <Typography className={classes.h4} variant="h4">
@@ -89,6 +92,6 @@ const About = forwardRef(({ ...props }, ref) => {
          </Box>
       </Container>
    );
-});
+};
 
 export default About;

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import PositionScrollService from '../components/UsePositionScroll';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -32,21 +33,22 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
-const PublicLayout = ({ children }) => {
-   console.log('🚀 ~ file: PublicLayout.jsx:36 ~ PublicLayout ~ children:', children);
+const PublicLayout = () => {
    const classes = useStyles();
-   const ref = useRef(null);
+
    return (
-      <div className={classes.root} id="root">
-         <Navbar ref={ref} />
-         <div className={classes.wrapper}>
-            <div className={classes.contentContainer} id="container">
-               <div className={classes.content} id="scrolling-container">
-                  <Outlet context={[ref]} />
+      <PositionScrollService>
+         <div className={classes.root} id="root">
+            <Navbar />
+            <div className={classes.wrapper}>
+               <div className={classes.contentContainer} id="container">
+                  <div className={classes.content} id="scrolling-container">
+                     <Outlet />
+                  </div>
                </div>
             </div>
          </div>
-      </div>
+      </PositionScrollService>
    );
 };
 

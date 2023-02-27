@@ -1,10 +1,13 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { makeStyles } from '@mui/styles';
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 import Page from '../../layout/Page';
 import About from './components/About';
-import { useOutlet, useOutletContext } from 'react-router-dom';
+import Experience from './components/Experience';
+import Welcome from './components/Welcome';
+import Loading from '../../components/loading/Loading';
+import { usePositionScroll } from '../../components/UsePositionScroll';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -22,50 +25,25 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
-const Home = ({ props }) => {
-   console.log('🚀 ~ file: Home.jsx:25 ~ Home ~ props:', props);
+const Home = () => {
    const classes = useStyles();
-   const aboutRef = useRef(null);
-   const [ref] = useOutletContext();
-   console.log('🚀 ~ file: Home.jsx:30 ~ Home ~ ref:', ref);
+   const { isLoading } = usePositionScroll();
 
-   const handleToAbout = () => {
-      aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
-      console.log('🚀 ~ file: Home.jsx:34 ~ handleToAbout ~ aboutRef:', aboutRef);
-   };
+   if (isLoading) {
+      return <Loading />;
+   }
 
    return (
       <Page className={classes.root} title="I Am Full Stack Developer">
          <Container maxWidth="lg">
-            <Welcome handleClick={handleToAbout} />
+            <Welcome />
             <Box height="100vh" />
-            <About ref={aboutRef} />
+            <About />
+            <Box height="100vh" />
+            <Experience />
             <Box height="100vh" />
          </Container>
       </Page>
    );
 };
-
-const Welcome = ({ handleClick }) => {
-   const classes = useStyles();
-   return (
-      <Box mt={10} display="flex" alignItems="flex-start" flexDirection="column">
-         <Typography className={classes.text}>Hi' my name is</Typography>
-         <Typography className={classes.h4} variant="h2">
-            Sattra Anuwareepong (MIKE)
-         </Typography>
-         <Typography className={classes.text} variant="h2">
-            I build things for the web.
-         </Typography>
-         <Typography className={classes.text}>
-            I like to craft solid and scalable frontend products with great user experiences.
-         </Typography>
-         <Box my={1} />
-         <Button onClick={handleClick} variant="contained" color="primary">
-            About Me
-         </Button>
-      </Box>
-   );
-};
-
 export default Home;
